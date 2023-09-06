@@ -14,12 +14,14 @@ create-cluster:
 prepare:
   k3d image import schwannden/demo-backend:0.1.0 -c {{cluster_name}}
 
+# use helm to install
 install:
   helm install demo-backend . --namespace demo --create-namespace
 
+# use helm to upgrade an install
 upgrade:
   helm upgrade demo-backend . --namespace demo
 
-# format python
+# use helm to uninstall
 uninstall:
-  helm uninstall demo-backend . --namespace demo --create-namespace
+  helm uninstall demo-backend . --namespace demo
