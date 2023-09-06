@@ -1,0 +1,25 @@
+set dotenv-load
+
+namespace := "demo"
+cluster_name := "demo"
+
+default:
+    @just --list --unsorted
+
+# create demo cluster
+create-cluster:
+  k3d cluster create demo -p 8080:80
+
+# load image and create namespace
+prepare:
+  k3d image import schwannden/demo-backend:0.1.0 -c {{cluster_name}}
+
+install:
+  helm install demo-backend . --namespace demo --create-namespace
+
+upgrade:
+  helm upgrade demo-backend . --namespace demo
+
+# format python
+uninstall:
+  helm uninstall demo-backend . --namespace demo --create-namespace
